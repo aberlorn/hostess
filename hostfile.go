@@ -41,11 +41,20 @@ type Hostfile struct {
 	Path  string
 	Hosts Hostlist
 	data  []byte
+
+	HasError bool  `json:"-"`
+	Messages []string `json:"-"`
+	PrettyPrint []string `json:"-"`
+}
+
+func (h *Hostfile) ClearMessages() {
+	h.HasError = false
+	h.Messages = []string{}
 }
 
 // NewHostfile creates a new Hostfile object from the specified file.
 func NewHostfile() *Hostfile {
-	return &Hostfile{GetHostsPath(), Hostlist{}, []byte{}}
+	return &Hostfile{Path: GetHostsPath(), Hosts: Hostlist{}, data: []byte{}}
 }
 
 // GetHostsPath returns the location of the hostfile; either env HOSTESS_PATH

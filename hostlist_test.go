@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/cbednarski/hostess"
+	"github.com/aberlorn/hostess"
 )
 
 func TestAddDuplicate(t *testing.T) {

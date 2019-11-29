@@ -1,8 +1,6 @@
 package hostess
 
-import (
-	"fmt"
-)
+import "strings"
 
 //
 //import (
@@ -24,14 +22,14 @@ import (
 //// ErrCantWriteHostFile indicates that we are unable to write to the hosts file
 //var ErrCantWriteHostFile = fmt.Errorf(
 //	"Unable to write to %s. Maybe you need to sudo?", GetHostsPath())
-
+//
 //// MaybeErrorln will print an error message unless -s is passed
 //func MaybeErrorln(c *cli.Context, message string) {
 //	if !AnyBool(c, "s") {
 //		os.Stderr.WriteString(fmt.Sprintf("%s\n", message))
 //	}
 //}
-
+//
 //// MaybeError will print an error message unless -s is passed and then exit
 //func MaybeError(c *cli.Context, message string) {
 //	MaybeErrorln(c, message)
@@ -57,20 +55,19 @@ import (
 //	}
 //	return hostsfile
 //}
-
-// AlwaysLoadHostFile will load, parse, and return a Hostfile. If we encounter
-// errors they will be printed to the terminal, but we'll try to continue.
-func AlwaysLoadHostFile() *Hostfile {
-	hostsfile, errs := LoadHostfile()
-	if len(errs) > 0 {
-		for _, err := range errs {
-			hostsfile.HasError = true
-			hostsfile.Messages = append(hostsfile.Messages, err.Error())
-		}
-	}
-	return hostsfile
-}
-
+//
+//// AlwaysLoadHostFile will load, parse, and return a Hostfile. If we encouter
+//// errors they will be printed to the terminal, but we'll try to continue.
+//func AlwaysLoadHostFile(c *cli.Context) *Hostfile {
+//	hostsfile, errs := LoadHostfile()
+//	if len(errs) > 0 {
+//		for _, err := range errs {
+//			MaybeErrorln(c, err.Error())
+//		}
+//	}
+//	return hostsfile
+//}
+//
 //// MaybeSaveHostFile will output or write the Hostfile, or exit 1 and error.
 //func MaybeSaveHostFile(c *cli.Context, hostfile *Hostfile) {
 //	// If -n is passed, no-op and output the resultant hosts file to stdout.
@@ -84,17 +81,17 @@ func AlwaysLoadHostFile() *Hostfile {
 //		}
 //	}
 //}
-//
-//// StrPadRight adds spaces to the right of a string until it reaches l length.
-//// If the input string is already that long, do nothing.
-//func StrPadRight(s string, l int) string {
-//	r := l - len(s)
-//	if r < 0 {
-//		r = 0
-//	}
-//	return s + strings.Repeat(" ", r)
-//}
-//
+
+// StrPadRight adds spaces to the right of a string until it reaches l length.
+// If the input string is already that long, do nothing.
+func StrPadRight(s string, l int) string {
+	r := l - len(s)
+	if r < 0 {
+		r = 0
+	}
+	return s + strings.Repeat(" ", r)
+}
+
 //// Add command parses <hostname> <ip> and adds or updates a hostname in the
 //// hosts file. If the aff command is used the hostname will be disabled or
 //// added in the off state.
@@ -205,33 +202,31 @@ func AlwaysLoadHostFile() *Hostfile {
 //		MaybeError(c, fmt.Sprintf("%s not found in %s", domain, GetHostsPath()))
 //	}
 //}
-
-// List command shows a list of hostnames in the hosts file
-func List() *Hostfile {
-	hostsfile := AlwaysLoadHostFile()
-	maxdomain := 0
-	maxip := 0
-	for _, hostname := range hostsfile.Hosts {
-		dlen := len(hostname.Domain)
-		if dlen > maxdomain {
-			maxdomain = dlen
-		}
-		ilen := len(hostname.IP)
-		if ilen > maxip {
-			maxip = ilen
-		}
-	}
-
-	for _, hostname := range hostsfile.Hosts {
-		hostsfile.PrettyPrint = append(hostsfile.PrettyPrint, fmt.Sprintf("%s -> %s %s\n",
-			StrPadRight(hostname.Domain, maxdomain),
-			StrPadRight(hostname.IP.String(), maxip),
-			hostname.FormatEnabled()))
-	}
-
-	return hostsfile
-}
-
+//
+//// Ls command shows a list of hostnames in the hosts file
+//func Ls(c *cli.Context) {
+//	hostsfile := AlwaysLoadHostFile(c)
+//	maxdomain := 0
+//	maxip := 0
+//	for _, hostname := range hostsfile.Hosts {
+//		dlen := len(hostname.Domain)
+//		if dlen > maxdomain {
+//			maxdomain = dlen
+//		}
+//		ilen := len(hostname.IP)
+//		if ilen > maxip {
+//			maxip = ilen
+//		}
+//	}
+//
+//	for _, hostname := range hostsfile.Hosts {
+//		fmt.Printf("%s -> %s %s\n",
+//			StrPadRight(hostname.Domain, maxdomain),
+//			StrPadRight(hostname.IP.String(), maxip),
+//			hostname.FormatEnabled())
+//	}
+//}
+//
 //const fixHelp = `Programmatically rewrite your hostsfile.
 //
 //Domains pointing to the same IP will be consolidated onto single lines and

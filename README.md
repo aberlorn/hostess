@@ -1,4 +1,4 @@
-# hostess [![](https://travis-ci.org/cbednarski/hostess.svg)](https://travis-ci.org/cbednarski/hostess) [![Coverage Status](https://coveralls.io/repos/cbednarski/hostess/badge.svg)](https://coveralls.io/r/cbednarski/hostess) [![GoDoc](https://godoc.org/github.com/cbednarski/hostess?status.svg)](http://godoc.org/github.com/cbednarski/hostess)
+# hostess [![](https://travis-ci.org/cbednarski/hostess.svg)](https://travis-ci.org/cbednarski/hostess) [![Coverage Status](https://coveralls.io/repos/cbednarski/hostess/badge.svg)](https://coveralls.io/r/cbednarski/hostess) [![GoDoc](https://godoc.org/github.com/aberlorn/hostess?status.svg)](http://godoc.org/github.com/aberlorn/hostess)
 
 An **idempotent** command-line utility for managing your `/etc/hosts` file.
 
@@ -14,7 +14,7 @@ and call it a day.
 
 ### Download and Install
 
-Download a [precompiled release](https://github.com/cbednarski/hostess/releases)
+Download a [precompiled release](https://github.com/aberlorn/hostess/releases)
 from GitHub.
 
 Builds are supported for OSX, Linux, Windows, and RaspberryPi.
@@ -66,11 +66,11 @@ To build from source you'll need to have go 1.4+
 
 #### Install with go get
 
-    go get github.com/cbednarski/hostess/cmd/hostess
+    go get github.com/aberlorn/hostess/cmd/hostess
 
 #### Install from source
 
-    git clone https://github.com/cbednarski/hostess
+    git clone https://github.com/aberlorn/hostess
     cd hostess
     make
     make install
